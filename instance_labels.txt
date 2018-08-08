@@ -1,3 +1,10 @@
-text1=1
-text2=0
-text3=1
+text1.txt=0
+text2.txt=0
+text3.txt=0
+text4.txt=1
+text5.txt=1
+text6.txt=1
+text7.txt=0
+text8.txt=0
+text9.txt=1
+text10.txt=1
