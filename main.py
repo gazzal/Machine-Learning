@@ -50,13 +50,14 @@ def main():
     print("The shapes of the X feature-matrix are: train: {}, test: {}".format(X_train.shape, X_test.shape))
 
     # Training the model
-    model = RandomForestClassifier(max_depth=2, random_state=0)
+    model = RandomForestClassifier()
     model.fit(X_train, y_train)
 
     # Test the model
     predictions = model.predict(X_test)
     correct = sum([p == r for p, r in zip(predictions, y_test)])
     acc = correct / len(y_test)
+    # print(list(zip(predictions, y_test)))
     print("The accuracy of the model is {}/{}={}.".format(correct, len(y_test), acc))
 
 if __name__ == '__main__':
