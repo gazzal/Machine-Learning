@@ -3,15 +3,29 @@ import os
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.ensemble import RandomForestClassifier
 
+from docx import Document
+
+def load_docx(pathname):
+    """ Load document so we can work with it """
+    document = Document(pathname)
+    text = ""
+    for p in document.paragraphs:
+        text += p.text
+    for t in document.tables:
+        for r in t.rows:
+            for c in r.cells:
+                text += c.text
+    return text
+
 def get_instance_list(mode='train'):
     # Read files with list of train/test-instances
     with open(mode + '_instances.txt', 'r') as fh:
         list_insts = [line.strip() for line in fh.readlines()]
+    print(list_insts)
     return list_insts
 
 def load_instances(instance_directory, label_file='instance_labels.txt'):
-    # Here you have to insert code to load the data into the variables
-    # For example:
+    # Load the data into the variables
     list_train_insts = get_instance_list('train')
     list_test_insts = get_instance_list('test')
 
@@ -22,8 +36,7 @@ def load_instances(instance_directory, label_file='instance_labels.txt'):
     # Create X_train/X_test
     X_train, X_test, y_train, y_test = [], [], [], []
     for instance in os.listdir(instance_directory):
-        with open(os.path.join(instance_directory, instance), 'r') as fh:
-            content = fh.read()
+        content = load_docx('instances/' + instance)
         if instance in list_train_insts:
             X_train.append(content)
             y_train.append(labels_dict[instance])
